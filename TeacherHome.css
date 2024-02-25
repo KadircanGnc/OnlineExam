@@ -1,0 +1,35 @@
+.profile-info {
+    margin-right: 20px;
+    font-size: larger;
+  }
+  .sidebar {
+    justify-content: center;
+    background-color: #f8f9fa;
+  }
+  .sidebar-sticky {
+    margin-top: 20px;
+  }
+  .navbar-brand {
+    color: #007bff;
+    font-weight: bold;
+  }
+  .navbar-light .navbar-nav .nav-link {
+    color: #007bff;
+  }
+  .nav-link {
+    color: #4e8cff;
+    font-weight: bold;
+    
+  }
+  .nav-item {
+    color: #4e8cff;
+  }
+  .dashboard {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  .collapsible-sign::after {
+    content: "+";
+    float: left;
+  }
