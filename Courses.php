@@ -25,19 +25,11 @@
             </thead> 
             <tbody>
             <?php
-              include("Course.php");              
-              $courseArray = array($database, $linear); 
-              echo json_encode($courseArray);              
-              foreach($courseArray as $c){                                             
-                echo"<tr><th scope=\'row\'>$c->id</th><td>$c->courseCode</td><td>$c->courseName</td></tr>";
-              }            
-             // $rowid = 0;             
-             // $courses = array("CSE204"=>"Database Management Systems","MAT222"=>"Linear Algebra","CSE320"=>"Computer Networks","CSE206"=>"Computer Organization","CSE236"=>"Web Programming");
-             // foreach($courses as $cid => $cvalue ){
-             //     $cArray = array(new Course($rowid + 1, $cid, $cvalue));                  
-             //     echo"<tr><th scope=\"row\">$cArray[$rowid]->id</th><td>$cArray[$rowid]->courseCode</td><td>$cArray[$rowid]->courseName</td></tr>";
-             //     $rowid++;
-             // }
+              include("Course.php");             
+              foreach($courseObj as $c){                                             
+                echo"<tr><th scope=\'row\'>".$c->id."</th><td>".$c->courseCode."</td><td>".$c->courseName."</td></tr>";
+              }
+             
             ?>
             </tbody>            
           </table>
