@@ -19,17 +19,16 @@
             <thead class="table-info">
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Course ID</th>
-                <th scope="col">Course Name</th>                
+                <th scope="col">Course Name</th>
+                <th scope="col">Course Code</th>                
               </tr>
             </thead> 
             <tbody>
             <?php
               include("Course.php");             
-              foreach($courseObj as $c){                                             
-                echo"<tr><th scope=\'row\'>".$c->id."</th><td>".$c->courseCode."</td><td>".$c->courseName."</td></tr>";
-              }
-             
+              foreach($coursesJ as $c){                                             
+                echo"<tr><th scope=\'row\'>".$c->pk."</th><td>".$c->name."</td><td>".$c->code."</td></tr>";
+              }             
             ?>
             </tbody>            
           </table>

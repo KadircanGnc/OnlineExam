@@ -1,5 +1,17 @@
 
 <?php
-$courseStr = '[{"id":1,"courseCode":"CSE204","courseName":"Database Management Systems"},{"id":2,"courseCode":"MAT222","courseName":"Linear Algebra"}]';
-$courseObj =  json_decode($courseStr);
+include("Connection.php");
+$query = "SELECT * FROM courses";
+$result = $con->query($query);
+
+$courses = array();
+
+if ($result->num_rows > 0) {  
+  while ($row = $result->fetch_assoc()) {
+      $courses[] = $row;
+  }
+}
+
+$coursesJson = json_encode($courses);
+$coursesJ = json_decode($coursesJson);
 ?>
