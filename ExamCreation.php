@@ -15,30 +15,29 @@
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
       <div class="dashboard">
-        <form>
+        <form action="ExamInsert.php" method="POST" id="examForm">
+            <div class="form-group"> 
+              <?php              
+              $code = $_GET["code"];
+              echo'<label>'.$code.'</label>'; 
+              ?>              
+            </div>
+            <input type="hidden" name="code" value="<?php echo $code; ?>">
             <div class="form-group">
               <label for="examName">Exam Name</label>
-              <input type="text" class="form-control" id="examName" placeholder="Enter exam name">
+              <input type="text" class="form-control" id="examName" name="examName" placeholder="Enter exam name">
             </div>
-            <div class="form-group">
-              <label for="examDuration">Exam Duration (minutes)</label>
-              <input type="range" class="form-control-range" id="examDuration" min="0" max="200" onchange="updateDuration(this.value)">
-              <p id="durationValue" style="text-align: center;">0 minutes</p>
+            <div class="form-group ">
+              <label for="examPercentage">Exam Percentage (%)</label>
+              <input type="range" class="form-control-range" id="examPercentage" name="examPercentage" min="0" max="100" onchange="updatePercentage(this.value)">
+              <p id="percentageValue" style="text-align: center;">% 0</p>
             </div>
             <div class="form-group">
               <label for="examDate">Exam Date</label>
-              <input type="date" class="form-control" id="examDate">
-            </div>
-            <div class="form-group">
-              <label for="course">Course</label>
-              <select class="form-control" id="course">
-                <option>Select Course</option>
-                <option>Computer Networks</option>
-                <option>Linear Algebra</option>
-                <option>Computer Organization</option>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-success">Create</button>
+              <input type="date" class="form-control" id="examDate" name="examDate">
+            </div>            
+            <button type="button" class="btn btn-success" onclick="submitForm()">Create</button>
+            
           </form>
       </div>
     </main>
@@ -46,7 +45,10 @@
 </div>
 
 <script>
-    function updateDuration(value) {
-      document.getElementById('durationValue').innerText = value + ' minutes';
+    function updatePercentage(value) {
+      document.getElementById('percentageValue').innerText = value + ' %';
     }
+    function submitForm() {
+      document.getElementById('examForm').submit();
+    }    
 </script>

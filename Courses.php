@@ -20,14 +20,15 @@
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Course Name</th>
-                <th scope="col">Course Code</th>                
+                <th scope="col">Course Code</th>
+                <th scope="col">Instructor Name</th>                
               </tr>
             </thead> 
             <tbody>
             <?php
               include("Course.php");             
-              foreach($coursesJ as $c){                                             
-                echo"<tr><th scope=\'row\'>".$c->pk."</th><td>".$c->name."</td><td>".$c->code."</td></tr>";
+              foreach($courses as $c){                                             
+                echo"<tr><th scope=\'row\'>".$c["pk"]."</th><td>".$c["cname"]."</td><td><a href=\"CourseDetails.php?code=".$c["code"]."\">".$c["code"]."</a></td><td>".$c["iname"]."</td></tr>";
               }             
             ?>
             </tbody>            

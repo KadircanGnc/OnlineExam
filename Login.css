@@ -1,0 +1,15 @@
+.login-card {
+    max-width: 400px;
+    margin: 50px auto;
+    display: none; 
+  }
+  .center-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    height: 100%;
+  }
+  .btn-block {
+    width: 100%;
+  }
