@@ -5,10 +5,7 @@
         <ul class="nav flex-column">
           <li class="nav-item">
             <a class="nav-link" href="TeacherCourses.php">Browse Courses</a>            
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="TeacherExams.php">Browse Exams</a>            
-          </li>
+          </li>          
         </ul>
       </div>
     </nav>

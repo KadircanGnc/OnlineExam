@@ -5,10 +5,7 @@
         <ul class="nav flex-column">
           <li class="nav-item">
             <a class="nav-link" href="TeacherCourses.php">Browse Courses</a>            
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="TeacherExams.php">Browse Exams</a>            
-          </li>
+          </li>          
         </ul>
       </div>
     </nav>
@@ -33,8 +30,7 @@
             ?>
             </tbody>            
           </table>
-      </div>
-      <div class="text-right col-md-9"><a class="btn btn-success" href="TeacherExamCreation.php" role="button">Create New Exam</a></div>      
+      </div>            
     </main>
   </div>
 </div>

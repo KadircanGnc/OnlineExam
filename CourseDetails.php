@@ -11,25 +11,13 @@ include("Navbar.php");
         <ul class="nav flex-column">
           <li class="nav-item">
             <a class="nav-link" href="TeacherCourses.php">Browse Courses</a>            
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="TeacherExams.php">Browse Exams</a>            
-          </li>
+          </li>          
         </ul>
       </div>
     </nav>
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-      <div class="dashboard">
-        <table class="table table-striped table-hover table-borderless">
-            <thead class="table-info">
-              <tr>                
-                <th scope="col">Course Name</th>
-                <th scope="col">Course Code</th>
-                <th scope="col">Instructor Name</th>                
-              </tr>
-            </thead> 
-            <tbody>
+      <div class="dashboard">        
             <?php
               include("Connection.php");  
               $code = $_GET["code"];
@@ -43,24 +31,26 @@ include("Navbar.php");
                     }
                }        
               foreach($courses as $c){                                                    
-                echo"<tr><th scope=\'row\'>".$c["cname"]."</th><td>".$c["code"]."</td><td>".$c["iname"]."</td></tr>";
+                echo "<div style='font-size: 20px; padding: 10px;'>";
+                echo "<strong>Course Name:</strong> " . $c["cname"] . "<br>";
+                echo "<strong>Course Code:</strong> " . $c["code"] . "<br>";
+                echo "<strong>Instructor:</strong> " . $c["iname"] . "<br></div>";                
               }             
-            ?>
-            </tbody>            
-          </table>
+            ?>            
           <table class="table table-striped table-hover table-borderless">
             <thead class="table-info">
               <tr>                
                 <th scope="col">Exam Date</th>
                 <th scope="col">Exam Type</th>
-                <th scope="col">Grade</th>                
+                <th scope="col">Grade</th>
+                <th scope="col">Action</th>               
               </tr>
             </thead> 
             <tbody>
             <?php
               include("Connection.php");
               $code = $_GET["code"];
-              $query = "SELECT c.pk,e.date AS edate,e.type AS etype,e.grade AS egrade FROM courses c,exam e WHERE c.pk=e.courseFk AND c.code='$code'"; 
+              $query = "SELECT c.pk,e.pk AS epk,e.date AS edate,e.type AS etype,e.grade AS egrade FROM courses c,exam e WHERE c.pk=e.courseFk AND c.code='$code'"; 
               $result = $con->query($query); 
               $exams = array();             
 
@@ -69,9 +59,22 @@ include("Navbar.php");
                     $exams[] = $row;
                     }
                 }         
-              foreach($exams as $e){                                             
-                echo"<tr><th scope=\'row\'>".$e["edate"]."</th><td>".$e["etype"]."</td><td>%".$e["egrade"]."</td></tr>";
-              }             
+                foreach($exams as $e) {                                             
+                  echo "<tr><th scope='row'>" . $e["edate"] . "</th><td>" . $e["etype"] . "</td><td>%" . $e["egrade"] . "</td><td>";                  
+                  // Form for editing exam
+                  echo "<form id='editForm' method='post' action='EditExam.php' style='display: inline-block;'>";
+                  echo "<input type='hidden' name='epk1' value='" . $e["epk"] . "'>";
+                  echo "<input type='hidden' name='courseCode' value='" . $code . "'>";                  
+                  echo '<button type="submit" class="btn btn-warning" name="editExam">Edit</button>';
+                  echo "</form>";                  
+                  // Form for deleting exam
+                  echo "<form id='deleteForm' method='post' action='ExamDelete.php' style='display: inline-block;'>";
+                  echo "<input type='hidden' name='epk' value='" . $e["epk"] . "'>";
+                  echo "<input type='hidden' name='courseCode' value='" . $code . "'>";                
+                  echo "<button type='submit' class='btn btn-danger' name='examDelete'>Delete</button>";
+                  echo "</form>";              
+                  echo "</td></tr>";
+              }
             ?>
             </tbody>            
           </table>
