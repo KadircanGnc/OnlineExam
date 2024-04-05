@@ -71,11 +71,16 @@ include("Navbar.php");
                   echo "<form id='deleteForm' method='post' action='ExamDelete.php' style='display: inline-block;'>";
                   echo "<input type='hidden' name='epk' value='" . $e["epk"] . "'>";
                   echo "<input type='hidden' name='courseCode' value='" . $code . "'>";                
-                  echo "<button type='submit' class='btn btn-danger' name='examDelete'>Delete</button>";
+                  echo "<button type='submit' class='btn btn-danger' name='examDelete' onclick='return confirmDelete()'>Delete</button>";
                   echo "</form>";              
                   echo "</td></tr>";
               }
             ?>
+            <script>
+              function confirmDelete() {
+              return confirm("Are you sure you want to delete this exam?");
+            }
+            </script>
             </tbody>            
           </table>
       </div>

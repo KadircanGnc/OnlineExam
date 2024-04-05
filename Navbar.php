@@ -5,7 +5,7 @@
     <div class="ml-auto d-flex align-items-center">
       <div class="profile-info mr-3">
         <img src="kadirnft.png" width="50" height="50" class="d-inline-block align-top" alt="">
-        <span style="font-size: larger;"><?php echo $_SESSION["name"] ?></span> 
+        <span style="font-size: larger;"><?php echo $_SESSION["name"]; ?></span> 
       </div>
     </div>
   </div>

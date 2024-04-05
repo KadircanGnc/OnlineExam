@@ -4,8 +4,8 @@ include("Connection.php");
 include("Header.php");
 include("Navbar.php");
 
-$epk = $_POST['epk1'];
-$courseCode = $_POST['courseCode'];
+$epk = testInput($_POST['epk1']);
+$courseCode = testInput($_POST['courseCode']);
 
 $query = "SELECT date, type, grade FROM exam WHERE pk = ?";
 $stmt = $con->prepare($query);
@@ -22,11 +22,11 @@ if ($stmt) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
     // Handle form submission for updating exam details
-    $newExamName = $_POST['examName'];
-    $newExamPercentage = $_POST['examPercentage'];
-    $newExamDate = $_POST['examDate'];
-    // Server-side validation for grade percentage
-    //$newGradeSum = calculateGradeSum($courseFk) + $newExamPercentage;
+    $newExamName = testInput($_POST['examName']);
+    $newExamPercentage = testInput($_POST['examPercentage']);
+    $newExamDate = testInput($_POST['examDate']);
+    
+    $newGradeSum = calculateGradeSum($courseFk) + $newExamPercentage;
     $newGradeSum = calculateGradeSum($courseCode);
  
  // Check if the new sum exceeds 100
@@ -40,11 +40,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
 }
     
     // Update the exam record in the database
-    $updateQuery = "UPDATE exam SET type = ?, grade = ?, date = ? WHERE pk = ?";
+    $updateQuery = "UPDATE exam SET type = ?, grade = ?, date = ?, updatedBy = ? WHERE pk = ?";
     $updateStmt = $con->prepare($updateQuery);
 
     if ($updateStmt) {
-        $updateStmt->bind_param("sdsi", $newExamName, $newExamPercentage, $newExamDate, $epk);
+        $updateStmt->bind_param("sdssi", $newExamName, $newExamPercentage, $newExamDate, $_SESSION["username"], $epk);
         $updateStmt->execute();
         $updateStmt->close();
 
@@ -69,26 +69,51 @@ function calculateGradeSum($courseFk) {
   return $sum; 
 }
 
-?>
+function testInput($data)
+{
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
 
+?>
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="TeacherCourses.php">Browse Courses</a>            
+          </li>          
+        </ul>
+      </div>
+    </nav>
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
     <div class="dashboard">
         <form action="" method="POST" id="examForm" class="needs-validation" novalidate>
             <input type="hidden" name="epk1" value="<?php echo $epk; ?>">
             <input type="hidden" name="courseCode" value="<?php echo $courseCode; ?>">
             <div class="form-group">
-                <label for="examName">Exam Name</label>
-                <input type="text" class="form-control" id="examName" name="examName" value="<?php echo $type; ?>" placeholder="Enter exam name" required>
-                <div class="invalid-feedback">Please enter the exam name.</div>
-            </div>
+                <label for="examName">Exam Name *</label>
+                <select class="form-control" id="examName" name="examName" aria-describedby="inputGroupPrepend2" required>
+                <option value="" selected disabled hidden><?php echo $type; ?></option>
+                <option value="Midterm" >Midterm</option>
+                <option value="Final" >Final</option>
+                <option value="Project" >Project</option>
+                <option value="Homework" >Homework</option>
+                <option value="Other" >Other</option>
+            </select>
+            <div class="invalid-feedback">Please select the exam name.</div>
+        </div>
             <div class="form-group">
-                <label for="examPercentage">Exam Percentage (%)</label>
+                <label for="examPercentage">Exam Percentage * (%)</label>
                 <input type="range" class="form-control-range" id="examPercentage" name="examPercentage" min="0" max="100" value="<?php echo $grade; ?>" onchange="updatePercentage(this.value)" required>
                 <p id="percentageValue" style="text-align: center;">% <?php echo $grade; ?></p>
                 <div class="invalid-feedback">Please select the exam percentage.</div>
             </div>
             <div class="form-group">
-                <label for="examDate">Exam Date</label>
+                <label for="examDate">Exam Date *</label>
                 <input type="date" class="form-control" id="examDate" name="examDate" value="<?php echo $date; ?>" required>
                 <div class="invalid-feedback">Please select the exam date.</div>
             </div>
@@ -96,7 +121,7 @@ function calculateGradeSum($courseFk) {
         </form>
     </div>
 </main>
-
+  </div>
 <script>
     function updatePercentage(value) {
         document.getElementById('percentageValue').innerText = value + ' %';

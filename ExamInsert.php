@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("Connection.php");
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -26,30 +27,52 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $row = $result->fetch_assoc();
     $courseFk = testInput($row["pk"]);
 
-    $newGradeSum = calculateGradeSum($courseFk) + $examPercentage;
+     // Start a transaction
+     $con->begin_transaction();
 
-    // Check if the new sum exceeds 100
-    if ($newGradeSum > 100) {
-        // Display an alert indicating that the total grade exceeds 100
-        echo '<script>';
-        echo 'alert("The total grade for the course exceeds 100%. Please adjust the exam percentage.");';
-        echo 'window.history.back();';  // Go back to the previous page
-        echo '</script>';
-        exit();
-    }
-
-    // Insert data into database
-    $sql = "INSERT INTO exam (date, type, grade, courseFk) VALUES ('$examDate', '$examName', '$examPercentage', '$courseFk')";
-    if ($con->query($sql) === TRUE) {
-        header("Location: CourseDetails.php?code=$code");
-        exit();
-    } else {
-        echo "Error: " . $sql . "<br>" . $con->error;
-    }
-} else {
-    // Redirect or display an error message if accessed without POST method
-    echo "Invalid request.";
-}
+     try {
+         $newGradeSum = calculateGradeSum($courseFk) + $examPercentage; 
+         // Check if the new sum exceeds 100
+         if ($newGradeSum > 100) {
+             throw new Exception("The total grade for the course exceeds 100%. Please adjust the exam percentage.");
+         }
+ 
+         // Insert data into database
+         $sql = "INSERT INTO exam (date, type, grade, courseFk, updatedBy) VALUES (?, ?, ?, ?, ?)";
+         $stmt = $con->prepare($sql);
+ 
+         if ($stmt) {
+             // Bind the parameters to the placeholders
+             $stmt->bind_param("ssdis", $examDate, $examName, $examPercentage, $courseFk, $_SESSION["username"]);
+ 
+             // Execute the prepared statement
+             if ($stmt->execute()) {
+                 // Commit the transaction if everything is successful
+                 $con->commit();
+                 header("Location: CourseDetails.php?code=$code");
+                 exit();
+             } else {
+                 echo "Error executing statement: " . $stmt->error;
+             }
+             // Close the statement
+             $stmt->close();
+         } else {
+             // Error preparing the statement
+             echo "Error preparing statement: " . $con->error;
+         }
+     } catch (Exception $e) {
+         // Rollback the transaction and handle the exception
+         $con->rollback();
+         echo '<script>';
+         echo 'alert("' . $e->getMessage() . '");';
+         echo 'window.history.back();';  // Go back to the previous page
+         echo '</script>';
+         exit();
+     }
+ } else {
+     // Redirect or display an error message if accessed without POST method
+     echo "Invalid request.";
+ }
 
 function testInput($data)
 {

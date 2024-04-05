@@ -3,8 +3,8 @@
 include("Connection.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["examDelete"])) {
-    $pk = $_POST["epk"];
-    $courseCode = $_POST["courseCode"];
+    $pk = testInput($_POST["epk"]);
+    $courseCode = testInput($_POST["courseCode"]);
     
     $query = "DELETE FROM exam WHERE pk = ?";
     $delete = $con->prepare($query);
@@ -26,5 +26,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["examDelete"])) {
     }
 } else {
     echo "Invalid request.";
+}
+
+function testInput($data)
+{
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
 }
 ?>
