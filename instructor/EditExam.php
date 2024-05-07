@@ -1,8 +1,8 @@
 <?php
 
-include("Connection.php");
-include("Header.php");
-include("Navbar.php");
+include("../util/Connection.php");
+include("../util/Header.php");
+include("../util/Navbar.php");
 
 $epk = testInput($_POST['epk1']);
 $courseCode = testInput($_POST['courseCode']);

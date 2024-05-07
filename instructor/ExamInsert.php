@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("Connection.php");
+include("../util/Connection.php");
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     // Server-side validation

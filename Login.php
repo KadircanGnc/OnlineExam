@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login Page</title>  
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="Login.css">  
+  <link rel="stylesheet" href="util/Login.css">  
 </head>
 <body style="background-color: #508bfc;">
   <section class="vh-100">
@@ -20,7 +20,7 @@
               <div class="card login-card" id="instructorLogin">
                 <div class="card-body">
                   <h5 class="card-title mb-4">Instructor Login</h5>
-                  <form method="post" action="LoginCheck.php" class="needs-validation" novalidate>
+                  <form method="post" action="util/LoginCheck.php" class="needs-validation" novalidate>
                     <div class="form-group">
                       <label for="iUsername">Username</label>
                       <input type="text" class="form-control" id="iUsername" name="username" placeholder="Enter username" required>
@@ -39,7 +39,7 @@
               <div class="card login-card mt-3" id="studentLogin">
                 <div class="card-body">
                   <h5 class="card-title mb-4">Student Login</h5>
-                  <form method="post" action="LoginCheck.php" class="needs-validation" novalidate>
+                  <form method="post" action="util/LoginCheck.php" class="needs-validation" novalidate>
                     <div class="form-group">
                       <label for="sUsername">Username</label>
                       <input type="text" class="form-control" id="sUsername" name="username" placeholder="Enter username" required>

@@ -22,7 +22,7 @@
             <input type="hidden" name="code" value="<?php echo $code; ?>">
             <div class="form-group">
             <?php
-            include("Connection.php");            
+            include("../util/Connection.php");            
             $sqlGetPk = "SELECT pk FROM courses WHERE code = ?";
             $stmtGetPk = $con->prepare($sqlGetPk);
             if ($stmtGetPk) {

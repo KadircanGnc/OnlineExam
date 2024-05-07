@@ -4,7 +4,8 @@
       <div class="sidebar-sticky">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link" href="TeacherCourses.php">Browse Courses</a>            
+            <a class="nav-link" href="TeacherCourses.php">Browse Courses</a>
+            <a class="nav-link" href="StudentInfo.php">Browse Students</a>            
           </li>          
         </ul>
       </div>

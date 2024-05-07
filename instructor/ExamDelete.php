@@ -1,6 +1,6 @@
 
 <?php
-include("Connection.php");
+include("../util/Connection.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["examDelete"])) {
     $pk = testInput($_POST["epk"]);

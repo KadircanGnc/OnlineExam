@@ -24,15 +24,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION["userPk"] = $row["pk"];
 
             if ($_SESSION["role"] == "instructor") {
-                header("Location: TeacherHome.php");
+                header("Location: ../instructor/TeacherHome.php");
                 exit();
             } elseif ($_SESSION["role"] == "student") {
-                header("Location: StudentHome.php");
+                header("Location: ../student/StudentHome.php");
                 exit();
             }
         } else {
             // Invalid credentials, redirect back to login page with an error message
-            header("Location: Login.php?error=invalid_credentials");
+            header("Location: ../Login.php?error=invalid_credentials");
             exit();
         }
 
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 } else {
     // Redirect back to login page if accessed directly without form submission
-    header("Location: Login.php");
+    header("Location: ../Login.php");
     exit();
 }
 

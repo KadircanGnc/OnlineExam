@@ -1,6 +1,6 @@
 
 <?php
-include("Connection.php");
+include("../util/Connection.php");
 $query = "SELECT c.pk,c.name AS cname,c.code,i.name AS iname FROM courses c,instructor i WHERE c.instructorFk=i.pk";
 $result = $con->query($query);
 
